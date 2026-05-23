@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <sys/select.h>
-
+void start_health_checks();
 #define PORT        8080
 #define BUFFER_SIZE 4096
 
@@ -100,8 +100,8 @@ int start_server(int use_lc) {
     listen(server_fd, 10);
 
     printf("Load balancer on port %d | algo: %s\n",
-           PORT, use_lc ? "least-connections" : "round-robin");
-
+        PORT, use_lc ? "least-connections" : "round-robin");
+        start_health_checks();
     while (1) {
         int client_fd = accept(server_fd, (struct sockaddr *)&address,
                                (socklen_t *)&addrlen);
